@@ -2,7 +2,6 @@
 #include "priorityqueue.h"
 using namespace std;
 
-
 int main(){
     priorityqueue<int> t;
     priorityqueue<int> h;
