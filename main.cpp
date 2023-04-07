@@ -22,13 +22,19 @@ int main(){
 
     //cout << t.Size();
     cout << t.toString() << endl << endl;
-
-    t.begin();
-    int i = 0;
-    while (t.next(value, priority)){
-        cout << priority << " value: " << value << endl;
-        i++;
+    
+    while (t.Size() > 0){
+        cout << t.dequeue() << endl;
     }
+
+    
+
+    // t.begin();
+    // int i = 0;
+    // while (t.next(value, priority)){
+    //     cout << priority << " value: " << value << endl;
+    //     i++;
+    // }
 
     t.clear();
 

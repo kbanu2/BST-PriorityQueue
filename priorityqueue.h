@@ -100,6 +100,54 @@ private:
         PreOrderCopy(root->right);
     }
 
+    void PopFront(NODE* head){
+        if (head->parent == nullptr){
+            root = head->link;
+
+            root->parent = nullptr;
+            root->dup = false;
+            root->left = head->left;
+            root->right = head->right;
+
+            UpdateListParents(root);
+        }
+        else{
+            NODE* next = head->link;
+
+            head->parent->left = head->link;
+
+            next->dup = false;
+            next->parent = head->parent;
+            next->left = head->left;
+            next->right = head->right;
+
+            UpdateListParents(next);
+        }
+
+        delete head;
+    }
+
+    void UpdateListParents(NODE* head){
+        NODE* current = head->link;
+
+        while (current != nullptr){
+            current->parent = head;
+        }
+    }
+
+    void DeleteSubRoot(NODE* subRoot){
+        if (subRoot->parent == nullptr){ //If subroot is tree root
+            root = subRoot->right;
+            if (root != nullptr)
+                root->parent = nullptr;
+            delete subRoot;
+            return;
+        }
+
+        subRoot->parent->left = nullptr;
+        delete subRoot;
+    }
+
 public:
     //
     // default constructor:
@@ -199,6 +247,7 @@ public:
         }
         temp->parent = prev;
     }
+
     //
     // dequeue:
     //
@@ -208,21 +257,19 @@ public:
     // of duplicate priorities
     //
     T dequeue() {
-        NODE* current = root;
-        T valueOut;
-
-        while (current->left != nullptr){
-            current = current->left;
-        }
-
-        if (current == root){ //Removing root, CAN contain duplicate
-
-        }
-
+        if (root == nullptr)
+            return T{};
         
+        NODE* current = FindLeftMostNode(root);
+        T valueOut = current->value;
+
+        if (current->link != nullptr)
+            PopFront(current);
+        else
+            DeleteSubRoot(current);
+        
+        size--;
         return valueOut; // TO DO: update this return
-        
-        
     }
     
     //
