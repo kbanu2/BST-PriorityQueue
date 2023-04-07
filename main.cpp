@@ -5,7 +5,7 @@ using namespace std;
 int main(){
     priorityqueue<int> t;
     priorityqueue<int> h;
-
+    int value, priority;
     //cout << t.Size();
     t.enqueue(4,1);
     t.enqueue(5,5);
@@ -22,6 +22,13 @@ int main(){
 
     //cout << t.Size();
     cout << t.toString() << endl << endl;
+
+    t.begin();
+    int i = 0;
+    while (t.next(value, priority)){
+        cout << priority << " value: " << value << endl;
+        i++;
+    }
 
     t.clear();
 

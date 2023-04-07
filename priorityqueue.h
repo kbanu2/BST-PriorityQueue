@@ -39,15 +39,19 @@ private:
     }
 
     void PushBack(NODE* head, NODE* prev, NODE* nodeToInsert){
-        if (head->link == nullptr){
-            head->dup = true;
-            head->link = nodeToInsert;
-            nodeToInsert->parent = prev;
-            return;
-        }
-        NODE* secondToLast = FindSecondToLast(head->link);
+        NODE* secondToLast = FindSecondToLast(head);
+
         secondToLast->link = nodeToInsert;
-        nodeToInsert->parent = prev;
+        nodeToInsert->parent = head;
+        nodeToInsert->dup = true;
+    }
+
+    NODE* FindLeftMostNode(NODE* root){
+        NODE* leftMost = root;
+        while (leftMost->left != nullptr){
+            leftMost = leftMost->left;
+        }
+        return leftMost;
     }
 
     string InorderPrint(NODE* root){
@@ -183,7 +187,6 @@ public:
                 current = current->right;
             }
             else{ //Duplicate
-                current->dup = true;
                 PushBack(current, prev, temp);
                 return;
             }
@@ -251,11 +254,7 @@ public:
     void begin() {
         if (root == nullptr)
             return;
-
-        curr = root;
-        while (curr->left != nullptr){
-            curr = curr->left;
-        }
+        curr = FindLeftMostNode(root);
     }
     
     //
@@ -280,7 +279,28 @@ public:
     //    cout << priority << " value: " << value << endl;
     //
     bool next(T& value, int &priority) {
-       return false;
+        if (curr == nullptr)
+            return false;
+
+        value = curr->value;
+        priority = curr->priority;
+
+        if (curr->link != nullptr){
+            curr = curr->link;
+            return true;
+        }
+        
+        if (curr->dup) //If down duplicate list
+            curr = curr->parent; //Return to front of list
+        
+        if (curr->right != nullptr)
+                curr = FindLeftMostNode(curr->right);
+        else if (curr->parent != nullptr && curr->parent->priority > curr->priority)
+            curr = curr->parent;
+        else
+            curr = nullptr;
+        
+        return true;
     }
     
     //
