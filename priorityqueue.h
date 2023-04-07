@@ -148,6 +148,20 @@ private:
         delete subRoot;
     }
 
+    bool PreOrderEquivalence(NODE* myRoot, NODE* otherRoot) const {
+        if (myRoot == nullptr && otherRoot == nullptr)
+            return true;
+        else if (myRoot == nullptr || otherRoot == nullptr)
+            return false;
+        else{
+            if (myRoot->priority == otherRoot->priority && myRoot->value == otherRoot->value && 
+            PreOrderEquivalence(myRoot->left, otherRoot->left) && PreOrderEquivalence(myRoot->right, otherRoot->right))
+                return true;
+            else
+                return false;
+        }
+    }
+
 public:
     //
     // default constructor:
@@ -386,12 +400,7 @@ public:
     // O(n), where n is total number of nodes in custom BST
     //
     bool operator==(const priorityqueue& other) const {
-        
-        
-        // TO DO: write this function.
-        return true; // TO DO: update this return
-        
-        
+        return PreOrderEquivalence(root, other.root);
     }
     
     //

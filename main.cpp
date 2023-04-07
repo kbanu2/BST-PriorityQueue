@@ -18,16 +18,16 @@ int main(){
     t.enqueue(8, -1);
     t.enqueue(0, 0);
 
-    //h = t;
+    h = t;
 
     //cout << t.Size();
-    cout << t.toString() << endl << endl;
+    //cout << t.toString() << endl << endl;
     
-    while (t.Size() > 0){
-        cout << t.peek() << " ";
-        cout << t.dequeue() << endl;
-    }
+    cout << (h == t) << endl;
 
+    h.dequeue();
+
+    cout << (h == t) << endl;
     
 
     // t.begin();
