@@ -24,6 +24,7 @@ int main(){
     cout << t.toString() << endl << endl;
     
     while (t.Size() > 0){
+        cout << t.peek() << " ";
         cout << t.dequeue() << endl;
     }
 

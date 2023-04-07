@@ -269,7 +269,7 @@ public:
             DeleteSubRoot(current);
         
         size--;
-        return valueOut; // TO DO: update this return
+        return valueOut;
     }
     
     //
@@ -372,13 +372,10 @@ public:
     // of duplicate priorities
     //
     T peek() {
+        if (root == nullptr)
+            return T{};
         
-        
-        // TO DO: write this function.
-        T valueOut;
-        return valueOut; // TO DO: update this return
-        
-        
+        return FindLeftMostNode(root)->value;
     }
     
     //
