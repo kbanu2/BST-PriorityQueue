@@ -121,16 +121,20 @@ TEST(priorityqueue, dequeue_entire){
     t.enqueue(4,10);
     t.enqueue(1,5);
     t.enqueue(3,3);
+    t.enqueue(4,10);
     t.enqueue(5,7);
     t.enqueue(10,15);
     t.enqueue(8,12);
     t.enqueue(9,20);
     t.enqueue(0, 13);
+    t.enqueue(4,10);
 
-    EXPECT_EQ(t.Size(), 8);
+    EXPECT_EQ(t.Size(), 10);
     EXPECT_EQ(t.dequeue(), 3);
     EXPECT_EQ(t.dequeue(), 1);
     EXPECT_EQ(t.dequeue(), 5);
+    EXPECT_EQ(t.dequeue(), 4);
+    EXPECT_EQ(t.dequeue(), 4);
     EXPECT_EQ(t.dequeue(), 4);
     EXPECT_EQ(t.dequeue(), 8);
     EXPECT_EQ(t.dequeue(), 0);
@@ -173,3 +177,4 @@ TEST(priorityqueue, assignment){
     EXPECT_EQ(valT, 3);
     EXPECT_EQ(priT, 3);
 }
+

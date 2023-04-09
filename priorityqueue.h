@@ -132,6 +132,7 @@ private:
 
         while (current != nullptr){
             current->parent = head;
+            current = current->link;
         }
     }
 
