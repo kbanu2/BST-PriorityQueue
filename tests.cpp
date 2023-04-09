@@ -137,3 +137,39 @@ TEST(priorityqueue, dequeue_entire){
     EXPECT_EQ(t.dequeue(), 10);
     EXPECT_EQ(t.dequeue(), 9);
 }
+
+TEST(priorityqueue, assignment){
+    priorityqueue<int> t;
+    priorityqueue<int> h;
+    int valT, priT, valH, priH;
+
+    t.enqueue(4,10);
+    t.enqueue(1,5);
+    t.enqueue(3,3);
+    t.enqueue(5,7);
+    t.enqueue(10,15);
+    t.enqueue(8,12);
+    t.enqueue(9,20);
+    t.enqueue(0, 13);
+
+    h = t;
+
+    h.begin();
+    t.begin();
+    EXPECT_EQ(t.Size(), h.Size());
+    EXPECT_EQ((t == h), true);
+    while(t.next(valT, priT) && h.next(valH, priH)){
+        EXPECT_EQ(valT, valH);
+        EXPECT_EQ(priT, priH);
+    }
+
+    while (h.Size() > 0){
+        h.dequeue();
+    }
+    
+    EXPECT_EQ(t.Size(), 8);
+    t.begin();
+    EXPECT_EQ(t.next(valT, priT), true);
+    EXPECT_EQ(valT, 3);
+    EXPECT_EQ(priT, 3);
+}
