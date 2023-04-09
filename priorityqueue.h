@@ -158,7 +158,7 @@ private:
             return false;
         else{
             if (myRoot->priority == otherRoot->priority && myRoot->value == otherRoot->value && 
-            PreOrderEquivalence(myRoot->left, otherRoot->left) && PreOrderEquivalence(myRoot->right, otherRoot->right))
+            PreOrderEquivalence(myRoot->left, otherRoot->left) && PreOrderEquivalence(myRoot->link, otherRoot->link) && PreOrderEquivalence(myRoot->right, otherRoot->right))
                 return true;
             else
                 return false;
@@ -365,9 +365,11 @@ public:
             }
             curr = curr->parent;
         }
-        else
+        else{
             curr = nullptr;
-        
+        }
+        if (curr == nullptr)
+            return false;
         return true;
     }
     
