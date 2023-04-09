@@ -7,7 +7,7 @@ ctest:
 
 gtest:
 	rm -f tests.exe
-	g++ -g -std=c++20 -Wall gtests.cpp -o tests.exe -lgtest -lgtest_main -lpthread
+	g++ -g -std=c++2a -Wall tests.cpp -o tests.exe -lgtest -lgtest_main -lpthread
 
 runtest:
 	./tests.exe

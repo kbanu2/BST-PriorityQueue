@@ -228,11 +228,11 @@ public:
         temp->dup = false;
         temp->link = nullptr;
         temp->value = value;
-        temp->priority = priority;
+        temp->priority = priority;  
+        temp->parent = nullptr;
 
         size++;
         if (root == nullptr){
-            temp->parent = nullptr;
             root = temp;
             return;
         }
@@ -356,8 +356,12 @@ public:
         
         if (curr->right != nullptr)
                 curr = FindLeftMostNode(curr->right);
-        else if (curr->parent != nullptr && curr->parent->priority > curr->priority)
+        else if (curr->parent != nullptr){
+            while (curr->parent != nullptr && curr != curr->parent->left){
+                curr = curr->parent;
+            }
             curr = curr->parent;
+        }
         else
             curr = nullptr;
         

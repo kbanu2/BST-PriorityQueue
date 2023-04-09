@@ -88,7 +88,7 @@ TEST(priorityqueue, dequeue_left){
 
 TEST(priorityqueue, dequeue_root){
     priorityqueue<int> t;
-    int val, int pri;
+    int val, pri;
 
     t.enqueue(1,2);
     EXPECT_EQ(t.Size(), 1);
@@ -108,7 +108,7 @@ TEST(priorityqueue, dequeue_root_additional){
 
     EXPECT_EQ(t.Size(), 4);
     EXPECT_EQ(t.dequeue(), 1);
-    EXPECT_EQ(t.Size, 3);
+    EXPECT_EQ(t.Size(), 3);
     t.begin();
     EXPECT_EQ(t.next(val, pri), true);
     EXPECT_EQ(val, 3);
