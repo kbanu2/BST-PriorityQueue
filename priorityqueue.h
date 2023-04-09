@@ -143,8 +143,10 @@ private:
             delete subRoot;
             return;
         }
-
-        subRoot->parent->left = nullptr;
+        
+        if (subRoot->right != nullptr)
+            subRoot->right->parent = subRoot->parent;
+        subRoot->parent->left = subRoot->right;
         delete subRoot;
     }
 
