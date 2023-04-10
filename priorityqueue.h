@@ -279,7 +279,7 @@ public:
                 current = current->right;
             }
             else{ //Duplicate
-                PushBack(current, prev, temp);
+                PushBack(current, temp);
                 return;
             }
         }
