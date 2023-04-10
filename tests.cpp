@@ -220,7 +220,7 @@ TEST(priorityqueue, dequeue_char){
 
 /// @brief Test if next member function works to inorder traverse with double type
 ///        Additionally uses enqueue, Begin, toString
-TEST(priorityqueue, next){
+TEST(priorityqueue, next_double){
     priorityqueue<double> t;
     double val;
     int pri;
