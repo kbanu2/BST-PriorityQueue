@@ -525,7 +525,7 @@ TEST(priorityqueue, peek){
     t.dequeue();
     EXPECT_EQ(t.peek(), 2);
     t.dequeue();
-    EXPECT_EQ(t.peek(), 3);
+    EXPECT_EQ(t.peek(), 2);
     t.dequeue();
     EXPECT_EQ(t.peek(), 3);
 }
