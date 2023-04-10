@@ -1,7 +1,8 @@
-/// @file priorityqueue.h
-///
-///
-///
+///@author Krenar Banushi
+///@date April 11, 2023
+///@brief This header provides the priorityqueue class and definitions.  A priorityqueue will store values in increasing order by priority. 
+///       This implementation is templated to allow for any data type, but priorities must be integers.
+///       Some main functions are enqueue, dequeue, begin, next, size, assignment operator, equality operator, toString
 /// Assignment details and provided code are created and
 /// owned by Adam T Koehler, PhD - Copyright 2023.
 /// University of Illinois Chicago - CS 251 Spring 2023
@@ -145,6 +146,8 @@ private:
         delete head;
     }
 
+    /// @brief Update child nodes' parents to the provided pointer to the head of the list
+    /// @param head pointer to set child nodes in list parent pointer to
     void UpdateListParents(NODE* head){
         NODE* current = head->link;
 
@@ -154,8 +157,10 @@ private:
         }
     }
 
+    /// @brief Delete root or subroot of the binary search tree and update parent pointer to next node
+    /// @param subRoot pointer to root of tree to be deleted
     void DeleteSubRoot(NODE* subRoot){
-        if (subRoot->parent == nullptr){ //If subroot is tree root
+        if (subRoot->parent == nullptr){
             root = subRoot->right;
             if (root != nullptr)
                 root->parent = nullptr;
@@ -169,6 +174,10 @@ private:
         delete subRoot;
     }
 
+    /// @brief return true if two binary search trees are equivalent to each other while also traversing duplicate nodes
+    /// @param myRoot pointer to root of first tree to compare
+    /// @param otherRoot pointer to root of second tree to compare
+    /// @return true if the two trees are equivalent to each other, false otherwise
     bool PreOrderEquivalence(NODE* myRoot, NODE* otherRoot) const {
         if (myRoot == nullptr && otherRoot == nullptr)
             return true;
@@ -275,7 +284,7 @@ public:
             }
         }
 
-        if (prev->priority < temp->priority)
+        if (prev->priority < temp->priority) 
             prev->right = temp;
         else{
             prev->left = temp;

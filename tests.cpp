@@ -1,3 +1,10 @@
+/// @filename tests.cpp
+/// @author Krenar Banushi
+/// @date April 11, 2023
+
+/// Provided testing file to implement
+/// framework based tests in using the GoogleTest framework
+
 #include <gtest/gtest.h>
 #include <iostream>
 #include "priorityqueue.h"
@@ -428,4 +435,116 @@ TEST(priorityqueue, next){
     EXPECT_EQ(val, 10);
     EXPECT_EQ(pri, 10);
     EXPECT_EQ(t.next(val, pri), false);   
+}
+
+/// @brief Test if peek member function returns value of node at front of queue
+///        Additionally uses enqueue, dequeue
+TEST(priorityqueue, peek){
+    priorityqueue<int> t;
+
+    t.enqueue(5,5);
+    t.enqueue(3,3);
+    t.enqueue(3,3);
+    t.enqueue(1,1);
+    t.enqueue(2,2);
+    t.enqueue(2,2);
+    t.enqueue(8,8);
+    t.enqueue(5,5);
+    t.enqueue(6,6);
+    t.enqueue(6,6);
+    t.enqueue(10,10);
+    t.enqueue(10,10);
+
+    EXPECT_EQ(t.peek(), 1);
+    t.dequeue();
+    EXPECT_EQ(t.peek(), 2);
+    t.dequeue();
+    EXPECT_EQ(t.peek(), 3);
+    t.dequeue();
+    EXPECT_EQ(t.peek(), 3);
+}
+
+/// @brief Test if the begin function will return the first node in the priorityqueue
+///        Additionally uses enqueue, Next
+TEST(priorityqueue, begin){
+    priorityqueue<int> t;
+    int val, pri;
+
+    t.enqueue(4,3);
+    t.enqueue(1,1);
+    t.begin();
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, 1);
+    EXPECT_EQ(pri, 1);
+    t.dequeue();
+    t.begin();
+    EXPECT_EQ(t.next(val, pri), false);
+    EXPECT_EQ(val, 4);
+    EXPECT_EQ(pri, 3);
+}
+
+/// @brief Test if enqueue member function works with strings
+///        Additionally uses Size, Begin, Next, toString
+TEST(priorityqueue, enqueue_string){
+    priorityqueue<string> t;
+    string val;
+    int pri;
+
+    t.enqueue("t", 3);
+    t.enqueue("e", 1);
+    t.enqueue("h", 6);
+
+    t.begin();
+    EXPECT_EQ(t.Size(), 3);
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, "e");
+    EXPECT_EQ(pri, 1);
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, "t");
+    EXPECT_EQ(pri, 3);
+    EXPECT_EQ(t.next(val, pri), false);
+    EXPECT_EQ(val, "h");
+    EXPECT_EQ(pri, 6);
+
+    t.toString();
+}
+
+/// @brief Test if the dequeue member function returns the correct type and correct value
+///        Additionally uses enqueue, toString
+TEST(priorityqueue, dequeue_char){
+    priorityqueue<char> t;
+
+    t.enqueue('c', 4);
+    t.enqueue('d', 1);
+    t.enqueue('h', 8);
+
+    t.toString();
+    EXPECT_EQ(t.dequeue(), 'd');
+    EXPECT_EQ(t.dequeue(), 'c');
+    EXPECT_EQ(t.dequeue(), 'h');
+    t.toString();
+}
+
+/// @brief Test if next member function works to inorder traverse with double type
+///        Additionally uses enqueue, Begin, toString
+TEST(priorityqueue, next){
+    priorityqueue<double> t;
+    double val;
+    int pri;
+
+    t.enqueue(3.1, 1);
+    t.enqueue(0, 6);
+    t.enqueue(11.43, 0);
+
+    t.toString();
+    t.begin();
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, 11.43);
+    EXPECT_EQ(pri, 0);
+    EXPECT_EQ(t.next(val,pri), true);
+    EXPECT_EQ(val, 3.1);
+    EXPECT_EQ(pri, 1);
+    EXPECT_EQ(t.next(val, pri), false);
+    EXPECT_EQ(val, 0);
+    EXPECT_EQ(pri, 6);
 }
