@@ -176,6 +176,72 @@ TEST(priorityqueue, dequeue_entire){
     t.toString();
 }
 
+/// @brief Test if enqueue member function works with strings
+///        Additionally uses Size, Begin, Next, toString
+TEST(priorityqueue, enqueue_string){
+    priorityqueue<string> t;
+    string val;
+    int pri;
+
+    t.enqueue("t", 3);
+    t.enqueue("e", 1);
+    t.enqueue("h", 6);
+
+    t.begin();
+    EXPECT_EQ(t.Size(), 3);
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, "e");
+    EXPECT_EQ(pri, 1);
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, "t");
+    EXPECT_EQ(pri, 3);
+    EXPECT_EQ(t.next(val, pri), false);
+    EXPECT_EQ(val, "h");
+    EXPECT_EQ(pri, 6);
+
+    t.toString();
+}
+
+/// @brief Test if the dequeue member function returns the correct type and correct value
+///        Additionally uses enqueue, toString
+TEST(priorityqueue, dequeue_char){
+    priorityqueue<char> t;
+
+    t.enqueue('c', 4);
+    t.enqueue('d', 1);
+    t.enqueue('h', 8);
+
+    t.toString();
+    EXPECT_EQ(t.dequeue(), 'd');
+    EXPECT_EQ(t.dequeue(), 'c');
+    EXPECT_EQ(t.dequeue(), 'h');
+    t.toString();
+}
+
+/// @brief Test if next member function works to inorder traverse with double type
+///        Additionally uses enqueue, Begin, toString
+TEST(priorityqueue, next){
+    priorityqueue<double> t;
+    double val;
+    int pri;
+
+    t.enqueue(3.1, 1);
+    t.enqueue(0, 6);
+    t.enqueue(11.43, 0);
+
+    t.toString();
+    t.begin();
+    EXPECT_EQ(t.next(val, pri), true);
+    EXPECT_EQ(val, 11.43);
+    EXPECT_EQ(pri, 0);
+    EXPECT_EQ(t.next(val,pri), true);
+    EXPECT_EQ(val, 3.1);
+    EXPECT_EQ(pri, 1);
+    EXPECT_EQ(t.next(val, pri), false);
+    EXPECT_EQ(val, 0);
+    EXPECT_EQ(pri, 6);
+}
+
 /// @brief Test if assignment operator will make a deep copy of given priorityqueue 
 ///        Additionally uses emqueue, dequeue, Size, Begin, Next, toString 
 /// @param  
@@ -481,70 +547,4 @@ TEST(priorityqueue, begin){
     EXPECT_EQ(t.next(val, pri), false);
     EXPECT_EQ(val, 4);
     EXPECT_EQ(pri, 3);
-}
-
-/// @brief Test if enqueue member function works with strings
-///        Additionally uses Size, Begin, Next, toString
-TEST(priorityqueue, enqueue_string){
-    priorityqueue<string> t;
-    string val;
-    int pri;
-
-    t.enqueue("t", 3);
-    t.enqueue("e", 1);
-    t.enqueue("h", 6);
-
-    t.begin();
-    EXPECT_EQ(t.Size(), 3);
-    EXPECT_EQ(t.next(val, pri), true);
-    EXPECT_EQ(val, "e");
-    EXPECT_EQ(pri, 1);
-    EXPECT_EQ(t.next(val, pri), true);
-    EXPECT_EQ(val, "t");
-    EXPECT_EQ(pri, 3);
-    EXPECT_EQ(t.next(val, pri), false);
-    EXPECT_EQ(val, "h");
-    EXPECT_EQ(pri, 6);
-
-    t.toString();
-}
-
-/// @brief Test if the dequeue member function returns the correct type and correct value
-///        Additionally uses enqueue, toString
-TEST(priorityqueue, dequeue_char){
-    priorityqueue<char> t;
-
-    t.enqueue('c', 4);
-    t.enqueue('d', 1);
-    t.enqueue('h', 8);
-
-    t.toString();
-    EXPECT_EQ(t.dequeue(), 'd');
-    EXPECT_EQ(t.dequeue(), 'c');
-    EXPECT_EQ(t.dequeue(), 'h');
-    t.toString();
-}
-
-/// @brief Test if next member function works to inorder traverse with double type
-///        Additionally uses enqueue, Begin, toString
-TEST(priorityqueue, next){
-    priorityqueue<double> t;
-    double val;
-    int pri;
-
-    t.enqueue(3.1, 1);
-    t.enqueue(0, 6);
-    t.enqueue(11.43, 0);
-
-    t.toString();
-    t.begin();
-    EXPECT_EQ(t.next(val, pri), true);
-    EXPECT_EQ(val, 11.43);
-    EXPECT_EQ(pri, 0);
-    EXPECT_EQ(t.next(val,pri), true);
-    EXPECT_EQ(val, 3.1);
-    EXPECT_EQ(pri, 1);
-    EXPECT_EQ(t.next(val, pri), false);
-    EXPECT_EQ(val, 0);
-    EXPECT_EQ(pri, 6);
 }
