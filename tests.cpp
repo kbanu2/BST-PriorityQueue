@@ -16,6 +16,8 @@ TEST(priorityqueue, constructor){
     t.toString();
 }
 
+/// @brief Test if enqueue puts nodes in correct location for a balanced tree
+///        Additionally uses Size, Begin, Next, toString 
 TEST(priorityqueue, enqueue_balanced){
     priorityqueue<int> t;
     int val, pri;
@@ -24,6 +26,8 @@ TEST(priorityqueue, enqueue_balanced){
     t.enqueue(1, 1);
     t.enqueue(5, 3);
     t.begin();
+
+    t.toString();
 
     EXPECT_EQ(t.Size(), 3);
     EXPECT_EQ(t.next(val, pri), true);
@@ -38,6 +42,8 @@ TEST(priorityqueue, enqueue_balanced){
     EXPECT_EQ(t.next(val, pri), false);
 }
 
+/// @brief Test if enqueue works when inserting nodes to a subtree
+///        Additionally uses Size, Begin, Next, toString 
 TEST(priorityqueue, enqueue_subtree){
     priorityqueue<int> t;
     int val, pri;
@@ -47,6 +53,8 @@ TEST(priorityqueue, enqueue_subtree){
     t.enqueue(4,4);
     t.enqueue(2,2);
     t.begin();
+
+    t.toString();
 
     EXPECT_EQ(t.Size(), 4);
     EXPECT_EQ(t.next(val, pri), true);
@@ -64,6 +72,9 @@ TEST(priorityqueue, enqueue_subtree){
     EXPECT_EQ(t.next(val, pri), false);
 }
 
+/// @brief Test if dequeue will properly delete the leftmost node off the tree
+///        Additionally uses enqueue, Size, Begin, Next, toString 
+/// @param  
 TEST(priorityqueue, dequeue_left){
     priorityqueue<int> t;
     int val, pri;
@@ -71,7 +82,8 @@ TEST(priorityqueue, dequeue_left){
     t.enqueue(3,5);
     t.enqueue(1,2);
     t.enqueue(4,8);
-    
+
+    t.toString();
 
     EXPECT_EQ(t.Size(), 3);
     EXPECT_EQ(t.dequeue(), 1);
@@ -86,6 +98,9 @@ TEST(priorityqueue, dequeue_left){
     EXPECT_EQ(t.next(val, pri), false);
 }
 
+/// @brief Test to see if dequeue will properly delete the root and update it to null
+///        Additionally uses enqueue, Size, Begin, Next, toString 
+/// @param  
 TEST(priorityqueue, dequeue_root){
     priorityqueue<int> t;
     int val, pri;
@@ -95,8 +110,12 @@ TEST(priorityqueue, dequeue_root){
     EXPECT_EQ(t.dequeue(), 1);
     t.begin();
     EXPECT_EQ(t.next(val, pri), false);
+
+    t.toString();
 }
 
+/// @brief Test if dequeue will properly delete root and reassign it with right child node
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, dequeue_root_additional){
     priorityqueue<int> t;
     int val, pri;
@@ -113,8 +132,12 @@ TEST(priorityqueue, dequeue_root_additional){
     EXPECT_EQ(t.next(val, pri), true);
     EXPECT_EQ(val, 3);
     EXPECT_EQ(pri, 5);
+
+    t.toString();
 }
 
+/// @brief Test if dequeue can be used to properly delete entire priority queue
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, dequeue_entire){
     priorityqueue<int> t;
 
@@ -129,6 +152,8 @@ TEST(priorityqueue, dequeue_entire){
     t.enqueue(0, 13);
     t.enqueue(4,10);
 
+    t.toString();
+
     EXPECT_EQ(t.Size(), 10);
     EXPECT_EQ(t.dequeue(), 3);
     EXPECT_EQ(t.dequeue(), 1);
@@ -140,8 +165,13 @@ TEST(priorityqueue, dequeue_entire){
     EXPECT_EQ(t.dequeue(), 0);
     EXPECT_EQ(t.dequeue(), 10);
     EXPECT_EQ(t.dequeue(), 9);
+
+    t.toString();
 }
 
+/// @brief Test if assignment operator will make a deep copy of given priorityqueue 
+///        Additionally uses emqueue, dequeue, Size, Begin, Next, toString 
+/// @param  
 TEST(priorityqueue, assignment){
     priorityqueue<int> t;
     priorityqueue<int> h;
@@ -176,8 +206,13 @@ TEST(priorityqueue, assignment){
     EXPECT_EQ(t.next(valT, priT), true);
     EXPECT_EQ(valT, 3);
     EXPECT_EQ(priT, 3);
+
+    h.toString();
+    t.toString();
 }
 
+/// @brief Test to check if equality operator will propery return true when comparing two equivalent priorityqueues
+///        Additionally uses enqeue Size, Begin, Next, toString 
 TEST(priorityqueue, equality_equal){
     priorityqueue<int> t;
     priorityqueue<int> h;
@@ -204,8 +239,13 @@ TEST(priorityqueue, equality_equal){
         EXPECT_EQ(val1, val2);
         EXPECT_EQ(pri1, pri2);
     }
+
+    h.toString();
+    t.toString();
 }
 
+/// @brief Test if equality operator will properly return false if there is an additional duplicate element in one of the queues
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, equality_notequal_duplicate){
     priorityqueue<int> t;
     priorityqueue<int> h;
@@ -233,6 +273,8 @@ TEST(priorityqueue, equality_notequal_duplicate){
     EXPECT_EQ((t == h), false);
 }
 
+/// @brief Test if equality operator will return false if an additional node is added to one of the priority queues
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, equality_notequal_leaf){
     priorityqueue<int> t;
     priorityqueue<int> h;
@@ -257,9 +299,14 @@ TEST(priorityqueue, equality_notequal_leaf){
     EXPECT_EQ(t.Size(), 13);
     EXPECT_EQ(h.Size(), 12);
 
+    t.toString();
+    h.toString();
+
     EXPECT_EQ((t == h), false);
 }
 
+/// @brief Test to see if equality operator will work if the conditions are flipped
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, equality_reversed){
     priorityqueue<int> t;
     priorityqueue<int> h;
@@ -279,10 +326,15 @@ TEST(priorityqueue, equality_reversed){
 
     h = t;
 
+    t.toString();
+    h.toString();
+
     EXPECT_EQ((t == h), true);
     EXPECT_EQ((h == t), true);
 }
 
+/// @brief Test to see if next member function will return false on an empty priority queue
+///        Additionally uses Size, Begin, Next, toString 
 TEST(priorityqueue, next_empty){
     priorityqueue<int> t;
     int val, pri;
@@ -291,6 +343,8 @@ TEST(priorityqueue, next_empty){
     EXPECT_EQ(t.next(val, pri), false);
 }
 
+/// @brief Test to see if next member function will properly inorder traverse through priority queue
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, next_nonempty_noduplicates){
     priorityqueue<int> t;
     int val, pri;
@@ -316,6 +370,8 @@ TEST(priorityqueue, next_nonempty_noduplicates){
     EXPECT_EQ(t.next(val, pri), false);
 }
 
+/// @brief Test to see if next member function works to traverse priority queue with duplicate entries
+///        Additionally uses enqueue, Size, Begin, Next, toString 
 TEST(priorityqueue, next){
     priorityqueue<int> t;
     int val, pri;

@@ -30,6 +30,9 @@ private:
     int size;  // # of elements in the pqueue
     NODE* curr;  // pointer to next item in pqueue (see begin and next)
 
+    /// @brief Return the second to last node in a list using a pointer to the head of the list
+    /// @param head pointer to head of list
+    /// @return pointer to second to last node in the list
     NODE* FindSecondToLast(NODE* head){
         NODE* current = head;
         while (current->link != nullptr){
@@ -38,7 +41,10 @@ private:
         return current;
     }
 
-    void PushBack(NODE* head, NODE* prev, NODE* nodeToInsert){
+    /// @brief Append node to the end of a list and assign its parent to the head of the list
+    /// @param head pointer to head of list
+    /// @param nodeToInsert pointer of node to insert
+    void PushBack(NODE* head, NODE* nodeToInsert){
         NODE* secondToLast = FindSecondToLast(head);
 
         secondToLast->link = nodeToInsert;
@@ -46,6 +52,9 @@ private:
         nodeToInsert->dup = true;
     }
 
+    /// @brief Return leftmost node in the tree by traversing through node->left
+    /// @param root pointer of node to begin search from
+    /// @return pointer of left most node in the tree
     NODE* FindLeftMostNode(NODE* root){
         NODE* leftMost = root;
         while (leftMost->left != nullptr){
@@ -54,6 +63,9 @@ private:
         return leftMost;
     }
 
+    /// @brief Recursively generate string of all node's priority and value followed by an endline 
+    /// @param root pointer to the root of the binary search tree
+    /// @return string of every node's priorities and values split by endlines
     string InorderPrint(NODE* root){
         stringstream ss;
         string line;
@@ -79,6 +91,8 @@ private:
         return line;
     }
 
+    /// @brief Recursively delete tree by starting from the bottom-up
+    /// @param root pointer to root of tree
     void PostOrderDelete(NODE* root){
         if (root == nullptr)
             return;
@@ -90,6 +104,8 @@ private:
         delete root;
     }
 
+    /// @brief Recursively deep copy tree into current tree using pointer to root of other tree
+    /// @param root pointer to root of tree to copy
     void PreOrderCopy(NODE* root) {
         if (root == nullptr)
             return;
@@ -99,7 +115,9 @@ private:
         PreOrderCopy(root->link);
         PreOrderCopy(root->right);
     }
-
+    
+    /// @brief Remove node at the front of a duplicate list and reassign the parent node's left and right parameters to the next node in the list
+    /// @param head pointer to head of the list
     void PopFront(NODE* head){
         if (head->parent == nullptr){
             root = head->link;
@@ -360,14 +378,14 @@ public:
         if (curr->right != nullptr)
                 curr = FindLeftMostNode(curr->right);
         else if (curr->parent != nullptr){
-            while (curr->parent != nullptr && curr != curr->parent->left){
+            //Traverse up parent nodes until the parent node is a left child
+            while (curr->parent != nullptr && curr != curr->parent->left)
                 curr = curr->parent;
-            }
             curr = curr->parent;
         }
-        else{
+        else
             curr = nullptr;
-        }
+
         if (curr == nullptr)
             return false;
         return true;
